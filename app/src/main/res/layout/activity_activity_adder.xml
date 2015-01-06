@@ -41,7 +41,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/action_edit"
+        android:id="@+id/action_edit_text"
         android:inputType="textAutoComplete"
         android:hint="Type what you're doing"
         android:text="@string/action_default_string"/>
@@ -68,40 +68,35 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
+            <!-- Very unproductive-->
             <RadioButton android:id="@+id/productivity1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="1"/>
+            <!-- Unproductive -->
             <RadioButton android:id="@+id/productivity2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2"
                 android:layout_weight="1"/>
+            <!-- Only a little unproductive-->
             <RadioButton android:id="@+id/productivity3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="3"
                 android:layout_weight="1"/>
+            <!-- Productive -->
             <RadioButton android:id="@+id/productivity4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="4"
                 android:layout_weight="1"/>
+            <!-- On a real roll! -->
             <RadioButton android:id="@+id/productivity5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5"
-                android:layout_weight="1"/>
-            <RadioButton android:id="@+id/productivity6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="6"
-                android:layout_weight="1"/>
-            <RadioButton android:id="@+id/productivity7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="7"
                 android:layout_weight="1"/>
         </RadioGroup>
     </LinearLayout>
@@ -126,40 +121,35 @@
             android:layout_weight="1"
             android:id="@+id/energy_radio_group">
 
+            <!-- No energy-->
             <RadioButton android:id="@+id/energy1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="1"/>
+            <!-- Little energy -->
             <RadioButton android:id="@+id/energy2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2"
                 android:layout_weight="1"/>
+            <!-- Average energy-->
             <RadioButton android:id="@+id/energy3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="3"
                 android:layout_weight="1"/>
+            <!-- Energetic -->
             <RadioButton android:id="@+id/energy4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="4"
                 android:layout_weight="1"/>
+            <!-- Very energetic! -->
             <RadioButton android:id="@+id/energy5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="5"
-                android:layout_weight="1"/>
-            <RadioButton android:id="@+id/energy6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="6"
-                android:layout_weight="1"/>
-            <RadioButton android:id="@+id/energy7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="7"
                 android:layout_weight="1"/>
         </RadioGroup>
     </LinearLayout>

@@ -4,10 +4,13 @@
 
 package btjandra.activitytracker;
 
+import java.security.InvalidParameterException;
+import java.security.spec.InvalidParameterSpecException;
+
 public class Entry {
 
     private long id;
-    private int timestamp;
+    private long timestamp;
     private String action;
     private int productivity;
     private int energy;
@@ -20,11 +23,11 @@ public class Entry {
         this.id = id;
     }
 
-    public int getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -40,14 +43,14 @@ public class Entry {
         return productivity;
     }
 
-    public void setProductivity(int productivity) {
+    public void setProductivity(int productivity) throws InvalidParameterException{
         int MIN_PROD = 1;
         int MAX_PROD = 7;
         if (productivity >= MIN_PROD && productivity <= MAX_PROD) {
             this.productivity = productivity;
         } else {
             // I don't know this shouldn't happen.
-            throw new Exception();
+            throw new InvalidParameterException();
         }
     }
 
@@ -55,14 +58,14 @@ public class Entry {
         return energy;
     }
 
-    public void setEnergy(int energy) {
+    public void setEnergy(int energy) throws InvalidParameterException {
         int MIN_ENER = 1;
         int MAX_ENER = 7;
         if (energy >= MIN_ENER && energy <= MAX_ENER) {
             this.energy = energy;
         } else {
             // I don't know this shouldn't happen.
-            throw new Exception();
+            throw new InvalidParameterException();
         }
     }
 

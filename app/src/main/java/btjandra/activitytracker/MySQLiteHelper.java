@@ -23,23 +23,24 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
 
     private static final String DATABASE_CREATE = "create table " +
             TABLE_ENTRIES + "(" + COLUMN_ID + " integer primary key autoincrement, " +
-            COLUMN_TIMESTAMP + " INTEGER, " + COLUMN_ACTION + " TEXT, " +
-            COLUMN_PRODUCTIVITY + " INTEGER, " + COLUMN_ENERGY + " INTEGER);";
+            COLUMN_TIMESTAMP + " integer, " + COLUMN_ACTION + " text, " +
+            COLUMN_PRODUCTIVITY + " integer, " + COLUMN_ENERGY + " integer);";
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-//    @Override
-    public void onCreate(SQLiteDatabase database){
-        database.execSQL(DATABASE_CREATE);
-    }
-
-    public void onUpdate(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(MySQLiteHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data -BT");
         db.execSQL("DROP TABLES IF EXISTS " + TABLE_ENTRIES);
         onCreate(db);
     }
+
+    public void onCreate(SQLiteDatabase database){
+        database.execSQL(DATABASE_CREATE);
+    }
+
+
 }

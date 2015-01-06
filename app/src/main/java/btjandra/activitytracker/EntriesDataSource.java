@@ -4,6 +4,8 @@ package btjandra.activitytracker; /**
  * Needs methods to get types of data e.g. group by month, by hour, etc.
  */
 
+import java.security.InvalidParameterException;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class EntriesDataSource {
         dbHelper.close();
     }
 
-    public Entry createEntry(int timestamp, String action, int productivity, int energy) {
+    public Entry createEntry(long timestamp, String action, int productivity, int energy) {
 
         // put the values of the entry into a ContentValues object
         ContentValues values = new ContentValues();
@@ -85,10 +87,10 @@ public class EntriesDataSource {
         return entries;
     }
 
-    private Entry cursorToEntry(Cursor cursor) {
+    private Entry cursorToEntry(Cursor cursor) throws InvalidParameterException {
         Entry entry = new Entry();
         entry.setID(cursor.getLong(0));
-        entry.setTimestamp(cursor.getInt(1));
+        entry.setTimestamp(cursor.getLong(1));
         entry.setAction(cursor.getString(2));
         entry.setProductivity(cursor.getInt(3));
         entry.setEnergy(cursor.getInt(4));
