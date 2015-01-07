@@ -3,7 +3,7 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".ActivityAdder"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".NewEntry"
     android:orientation="vertical">
 
     <TextView
@@ -28,8 +28,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="One day I'll have the last date"
-        android:id="@+id/prevtime_text_view" />
+        android:id="@+id/prevtime_text_view"
+        android:autoText="false"
+        android:textColor="#000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,8 +44,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/action_edit_text"
         android:inputType="textAutoComplete"
-        android:hint="Type what you're doing"
-        android:text="@string/action_default_string"/>
+        android:hint="Type what you're doing"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="For what role?"
+        android:id="@+id/textView5"/>
+
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/role_spinner"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,7 +120,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Energy Level"
         android:id="@+id/textView4"/>
-
 
     <LinearLayout
         android:orientation="horizontal"

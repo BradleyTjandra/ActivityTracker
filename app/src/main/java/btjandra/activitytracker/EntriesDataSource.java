@@ -87,6 +87,12 @@ public class EntriesDataSource {
         return entries;
     }
 
+    //TODO: Complete this
+//    public Entry getLastEntry() {
+//        Cursor cursor = database.query(MySQLiteHelper.TABLE_ENTRIES,
+//                allColumns, "")
+//    }
+
     private Entry cursorToEntry(Cursor cursor) throws InvalidParameterException {
         Entry entry = new Entry();
         entry.setID(cursor.getLong(0));

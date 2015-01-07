@@ -1,36 +1,59 @@
 package btjandra.activitytracker;
 
+// huge shout out to http://www.vogella.com/tutorials/AndroidSQLite/article.html for its assistance
+
+import android.widget.ListAdapter;
+
+import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.RadioButton;
+import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.InvalidParameterException;
-import java.security.spec.InvalidParameterSpecException;
 import java.util.Date;
 
 
-public class ActivityAdder extends ActionBarActivity {
+public class ActivityAdder extends ListActivity {
 
-    private EntriesDataSource datasource;
+//    private EntriesDataSource datasource;
     private Date before;
+    public static final String EXTRA_PREV_TIME = "btjandra.activitytracker.activityadder.LAST_TIME_UTC";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_activity_adder);
+        setContentView(R.layout.activity_home_page);
 
-        datasource = new EntriesDataSource(this);
-        datasource.open();
+        String values[] = new String[] {"New Entry",
+        "Analyze Data",
+        "See Data",
+        "Change Settings",
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                R.layout.home_page_list_item,
+                values);
+        setListAdapter(adapter);
+
+        // we'll change this to actually get the last date from SQL
+        before = new Date();
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                onClick(position);
+//            }
+//        });
     }
 
     @Override
@@ -55,93 +78,28 @@ public class ActivityAdder extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onSubmit(View view) {
-        //get the info from the GUI somehow
-        Date now = new Date();
-        long timestamp = now.getTime();
-        before = now;
+    @Override
+    public void onListItemClick(ListView l, View view, int position, long id) {
 
-        EditText action_editTextId = (EditText)findViewById(R.id.action_edit_text);
-        String action = action_editTextId.getText().toString();
+        final int NEW_ENTRY = 0;
+        final int ANALYZE_DATA = 1;
+        final int SEE_DATA = 2;
+        final int SETTINGS = 3;
 
-        RadioGroup productivity_radio_group = (RadioGroup)findViewById(R.id.prod_radio_group);
-        int radioButtonId = productivity_radio_group.getCheckedRadioButtonId();
-        int productivity=0;
-        switch (radioButtonId) {
-            case R.id.productivity1:
-                productivity = 1;
+        Intent intent;
+        switch (position) {
+            case NEW_ENTRY:
+                intent = new Intent(this, NewEntry.class);
+                intent.putExtra(EXTRA_PREV_TIME, before.getTime());
+                startActivity(intent);
                 break;
-            case R.id.productivity2:
-                productivity = 2;
-                break;
-            case R.id.productivity3:
-                productivity = 3;
-                break;
-            case R.id.productivity4:
-                productivity = 4;
-                break;
-            case R.id.productivity5:
-                productivity = 5;
-                break;
-//            case R.id.productivity6:
-//                productivity = 6;
+//            case ANALYZE_DATA:
 //                break;
-//            case R.id.productivity7:
-//                productivity = 7;
+//            case SEE_DATA:
+//                intent = new Intent(this, DisplayData.class);
+//                startActivity(intent);
+//            case SETTINGS:
 //                break;
-            default:
-                Context context = getApplicationContext();
-                CharSequence text = "Please select a productivity value";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-                return;
         }
-
-        RadioGroup energy_radio_group = (RadioGroup)findViewById(R.id.energy_radio_group);
-        int energy_radioButtonId = energy_radio_group.getCheckedRadioButtonId();
-        int energy = 0;
-        switch (energy_radioButtonId) {
-            case R.id.energy1:
-                energy = 1;
-                break;
-            case R.id.energy2:
-                energy = 2;
-                break;
-            case R.id.energy3:
-                energy = 3;
-                break;
-            case R.id.energy4:
-                energy = 4;
-                break;
-            case R.id.energy5:
-                energy = 5;
-                break;
-            default:
-                Context context = getApplicationContext();
-                CharSequence text = "Please select a energy value";
-                int duration = Toast.LENGTH_SHORT;
-                Toast.makeText(context, text, duration).show();
-                return;
-        }
-
-        try {
-            datasource.createEntry(timestamp, action, productivity, energy);
-        }
-        catch (InvalidParameterException exception) {
-            Context context = getApplicationContext();
-            CharSequence text = "Something's wrong! :S";
-            int duration = Toast.LENGTH_SHORT;
-            Toast.makeText(context, text, duration).show();
-
-            return;
-        }
-        Context context = getApplicationContext();
-        CharSequence text = "Submitted entry to records";
-        int duration = Toast.LENGTH_SHORT;
-        Toast.makeText(context, text, duration).show();
-
-        this.finish();
     }
 }
