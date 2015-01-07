@@ -95,9 +95,9 @@ public class ActivityAdder extends ListActivity {
                 break;
 //            case ANALYZE_DATA:
 //                break;
-//            case SEE_DATA:
-//                intent = new Intent(this, DisplayData.class);
-//                startActivity(intent);
+            case SEE_DATA:
+                intent = new Intent(this, DisplayData.class);
+                startActivity(intent);
 //            case SETTINGS:
 //                break;
         }

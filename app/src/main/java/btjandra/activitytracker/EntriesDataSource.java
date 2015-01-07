@@ -87,6 +87,20 @@ public class EntriesDataSource {
         return entries;
     }
 
+    public Cursor getCursorForDisplayData() {
+
+        String[] columns = {
+                MySQLiteHelper.COLUMN_ID,
+                "strftime('%H:%M %d/%m/%Y', " + MySQLiteHelper.COLUMN_TIMESTAMP + "/1000, 'unixepoch') AS date",
+                MySQLiteHelper.COLUMN_ACTION,
+                MySQLiteHelper.COLUMN_PRODUCTIVITY,
+                MySQLiteHelper.COLUMN_ENERGY};
+        String sortBy = MySQLiteHelper.COLUMN_TIMESTAMP + " asc";
+
+        return database.query(MySQLiteHelper.TABLE_ENTRIES,
+                columns, null, null, null, null, sortBy);
+    }
+
     //TODO: Complete this
 //    public Entry getLastEntry() {
 //        Cursor cursor = database.query(MySQLiteHelper.TABLE_ENTRIES,

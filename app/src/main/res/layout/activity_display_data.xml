@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Button?"
-            android:id="@+id/button1" />
+            android:id="@+id/button1"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -20,15 +20,9 @@
             android:text="Button!"/>
         </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_vertical" >
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/display_data_table"/>
-    </ScrollView>
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/display_data_table"/>
 </LinearLayout>
