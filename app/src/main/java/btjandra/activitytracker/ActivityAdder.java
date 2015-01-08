@@ -5,26 +5,17 @@ package btjandra.activitytracker;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.util.Log;
-import android.widget.ListAdapter;
 
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
-import java.security.InvalidParameterException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,9 +57,9 @@ public class ActivityAdder extends ListActivity {
         Log.d("Bradley's log", "Just created an alarm at " + df.format(calendar.getTime()));
 
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pi = PendingIntent.getActivity(context,
+        PendingIntent pi = PendingIntent.getService(context,
                 0,
-                new Intent(context, NotificationActivity.class),
+                new Intent(context, NewEntryNotificationService.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
         long intervalMillis = AlarmManager.INTERVAL_HOUR;
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, pi);

@@ -40,10 +40,11 @@
         android:id="@+id/textClock"/>
 
     <AutoCompleteTextView
+        
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/action_edit_text"
-        android:inputType="textAutoComplete"
+        android:inputType="textAutoComplete|textCapSentences"
         android:hint="Type what you're doing"/>
 
     <TextView

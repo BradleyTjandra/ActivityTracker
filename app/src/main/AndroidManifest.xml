@@ -22,11 +22,8 @@
         <activity
             android:name=".DisplayData"
             android:label="@string/app_name"/>
-        <activity
-            android:name=".NotificationActivity"
-            android:label="@string/app_name"/>
-        <activity
-            android:name=".Receiver"
+        <service
+            android:name=".NewEntryNotificationService"
             android:label="@string/app_name"/>
     </application>
 
