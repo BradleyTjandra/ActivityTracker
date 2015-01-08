@@ -2,6 +2,9 @@ package btjandra.activitytracker;
 
 // huge shout out to http://www.vogella.com/tutorials/AndroidSQLite/article.html for its assistance
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.util.Log;
 import android.widget.ListAdapter;
 
 import android.app.ListActivity;
@@ -17,9 +20,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.security.InvalidParameterException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -48,12 +55,27 @@ public class ActivityAdder extends ListActivity {
         // we'll change this to actually get the last date from SQL
         before = new Date();
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                onClick(position);
-//            }
-//        });
+        // Creating a recurring alarm to enter into log
+        Context context = getApplicationContext();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm");
+        Log.d("Bradley's log", "Just created an alarm at " + df.format(calendar.getTime()));
+
+        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pi = PendingIntent.getActivity(context,
+                0,
+                new Intent(context, NotificationActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        long intervalMillis = AlarmManager.INTERVAL_HOUR;
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, pi);
+
+//        startActivity((Intent)new Intent(context, NotificationActivity.class));
+
+
     }
 
     @Override
