@@ -40,10 +40,6 @@ public class DisplayData extends ActionBarActivity {
         ListView listView = (ListView)findViewById(R.id.display_data_table);
         Cursor cursor = datasource.getCursorForDisplayData();
 
-//        CharSequence text = "Cursor length: " + cursor.getCount();
-//        int duration = Toast.LENGTH_SHORT;
-//        Toast.makeText(getApplicationContext(), text, duration).show();
-
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.display_item_list_item,
                 cursor,

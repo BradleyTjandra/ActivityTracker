@@ -49,7 +49,7 @@ public class Entry {
         if (productivity >= MIN_PROD && productivity <= MAX_PROD) {
             this.productivity = productivity;
         } else {
-            // I don't know this shouldn't happen.
+            // Uh-oh
             throw new InvalidParameterException();
         }
     }

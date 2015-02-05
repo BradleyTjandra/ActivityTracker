@@ -14,6 +14,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class EntriesDataSource {
 
@@ -91,7 +92,7 @@ public class EntriesDataSource {
 
         String[] columns = {
                 MySQLiteHelper.COLUMN_ID,
-                "strftime('%H:%M %d/%m/%Y', " + MySQLiteHelper.COLUMN_TIMESTAMP + "/1000, 'unixepoch') AS date",
+                "strftime('%H:%M %d/%m/%Y', " + MySQLiteHelper.COLUMN_TIMESTAMP + "/1000, 'unixepoch', 'localtime') AS date",
                 MySQLiteHelper.COLUMN_ACTION,
                 MySQLiteHelper.COLUMN_PRODUCTIVITY,
                 MySQLiteHelper.COLUMN_ENERGY};
@@ -102,10 +103,30 @@ public class EntriesDataSource {
     }
 
     //TODO: Complete this
-//    public Entry getLastEntry() {
-//        Cursor cursor = database.query(MySQLiteHelper.TABLE_ENTRIES,
-//                allColumns, "")
-//    }
+    public Entry getLastEntry() {
+        String columns = "";
+        String delim = "";
+        StringBuilder sb = new StringBuilder();
+        for (String str : allColumns) {
+            sb.append(delim)
+              .append(str);
+            delim = ", ";
+        }
+        columns = sb.toString();
+
+        String query = "SELECT "+columns+" FROM "+
+                MySQLiteHelper.TABLE_ENTRIES+" inner join (SELECT MAX("+
+                MySQLiteHelper.COLUMN_TIMESTAMP+") as maxDate from "+MySQLiteHelper.TABLE_ENTRIES+
+                ") max_table on "+MySQLiteHelper.TABLE_ENTRIES+"."+MySQLiteHelper.COLUMN_TIMESTAMP+
+                "= max_table.maxDate";
+
+        Cursor cursor = database.rawQuery(query, null);
+
+        cursor.moveToFirst();
+        Entry entry = cursorToEntry(cursor);
+        cursor.close();
+        return entry;
+    }
 
     private Entry cursorToEntry(Cursor cursor) throws InvalidParameterException {
         Entry entry = new Entry();

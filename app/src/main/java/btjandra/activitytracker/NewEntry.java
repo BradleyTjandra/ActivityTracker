@@ -11,14 +11,17 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.InvalidParameterException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
-
+// I found http://sqlfiddle.com/ infinitely useful here for finding the most recent date.
 public class NewEntry extends ActionBarActivity {
 
     private EntriesDataSource datasource;
@@ -30,15 +33,19 @@ public class NewEntry extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_entry);
 
+        datasource = new EntriesDataSource(this);
+        datasource.open();
 
         // writes the time of last entry to GUI
         Intent intent = getIntent();
         TextView prev_time = (TextView)findViewById(R.id.prevtime_text_view);
-        before = new Date(intent.getLongExtra(ActivityAdder.EXTRA_PREV_TIME,0));
-        // TODO: once we've set up ActivityAdder to query the database for the last entry even on start-up,
-        // we should make sure this isn't the default float.
-        DateFormat df = DateFormat.getTimeInstance();
+        before = new Date(datasource.getLastEntry().getTimestamp());
+        SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
         prev_time.setText(df.format(before));
+
+        // TODO: Make the judgement call on whether it's worth updating to API 21 or not
+//        TextClock cv = (TextClock)findViewById(R.id.curtime_text_clock);
+//        prev_time.setFontFeatureSettings(cv.getFontFeatureSettings());
 
 
         // TODO: create a spinner adapter to allow the user to pick a role
@@ -47,8 +54,7 @@ public class NewEntry extends ActionBarActivity {
 //        Spinner
 //        spinner.setAdapter(spinnerAdapter);
 
-        datasource = new EntriesDataSource(this);
-        datasource.open();
+
     }
 
     @Override
@@ -156,6 +162,10 @@ public class NewEntry extends ActionBarActivity {
         CharSequence text = "Submitted entry to records";
         int duration = Toast.LENGTH_SHORT;
         Toast.makeText(context, text, duration).show();
+
+//        if ((new Calendar(now.getTime())).get(Calendar.HOUR_OF_DAY) > 14) {
+//            I guess I could remind myself here to drink water??
+//        }
 
         this.finish();
     }

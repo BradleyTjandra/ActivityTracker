@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class ActivityAdder extends ListActivity {
 
-//    private EntriesDataSource datasource;
+    private EntriesDataSource datasource;
     private Date before;
     public static final String EXTRA_PREV_TIME = "btjandra.activitytracker.activityadder.LAST_TIME_UTC";
 
@@ -44,7 +44,12 @@ public class ActivityAdder extends ListActivity {
         setListAdapter(adapter);
 
         // we'll change this to actually get the last date from SQL
+        datasource = new EntriesDataSource(getApplicationContext());
+        datasource.open();
+
+        Entry prev_entry = datasource.getLastEntry();
         before = new Date();
+        before.setTime(prev_entry.getTimestamp());
 
         // Creating a recurring alarm to enter into log
         Context context = getApplicationContext();
@@ -54,7 +59,6 @@ public class ActivityAdder extends ListActivity {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         SimpleDateFormat df = new SimpleDateFormat("hh:mm");
-        Log.d("Bradley's log", "Just created an alarm at " + df.format(calendar.getTime()));
 
         AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pi = PendingIntent.getService(context,
@@ -63,10 +67,6 @@ public class ActivityAdder extends ListActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         long intervalMillis = AlarmManager.INTERVAL_HOUR;
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalMillis, pi);
-
-//        startActivity((Intent)new Intent(context, NotificationActivity.class));
-
-
     }
 
     @Override
@@ -103,7 +103,6 @@ public class ActivityAdder extends ListActivity {
         switch (position) {
             case NEW_ENTRY:
                 intent = new Intent(this, NewEntry.class);
-                intent.putExtra(EXTRA_PREV_TIME, before.getTime());
                 startActivity(intent);
                 break;
 //            case ANALYZE_DATA:
